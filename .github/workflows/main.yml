@@ -25,4 +25,4 @@ jobs:
             "timestamp": "$(date -u)"
           }' $WEBHOOK_URL
         env:
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          WEBHOOK_URL: ${{ https://github.com/fazil-shaik/webhook-repo }}
