@@ -1,28 +1,22 @@
-name: Webhook Trigger
+name: GitHub Actions Workflow
 
 on:
   push:
     branches:
-      - main
+      - '*'
   pull_request:
     branches:
-      - main
+      - '*'
   merge:
     branches:
-      - main
+      - '*'
 
 jobs:
-  notify:
+  trigger-webhook:
     runs-on: ubuntu-latest
     steps:
       - name: Send Webhook
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{
-            "event_type": "${{ github.event_name }}",
-            "author": "${{ github.actor }}",
-            "from_branch": "${{ github.event.before }}",
-            "to_branch": "${{ github.event.ref }}",
-            "timestamp": "$(date -u)"
-          }' $WEBHOOK_URL
-        env:
-          WEBHOOK_URL: ${{ https://github.com/fazil-shaik/webhook-repo }}
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{"event_type": "${{ github.event_name }}", "author": "${{ github.actor }}", "from_branch": "${{ github.head_ref }}", "to_branch": "${{ github.base_ref }}", "timestamp": "${{ github.event.created_at }}"}' \
+          https://your-webhook-endpoint.com/webhook
